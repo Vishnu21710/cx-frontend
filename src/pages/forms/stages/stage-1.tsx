@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import api from "@/lib/axios"
 import { FormInput } from "@/components/common/FormInput"
 import { FormSelect } from "@/components/common/FormSelect"
+import { Loader } from "lucide-react"
 
 const genderOptions = [
     { label: "Male", value: "male" },
@@ -170,8 +171,13 @@ export function Stage1Form({ formId, initialData, onSuccess }: any) {
             <form.Subscribe
                 selector={(state) => [state.canSubmit, state.isSubmitting]}
                 children={([canSubmit, isSubmitting]) => (
-                    <Button type="submit" className="w-full h-11" disabled={!canSubmit}>
-                        {isSubmitting ? "Saving..." : "Save & Next"}
+                    <Button type="submit" className="w-full h-11" disabled={!canSubmit || isSubmitting}>
+                        {isSubmitting ? (
+                            <span className="flex items-center gap-2">
+                                <Loader className="h-4 w-4 animate-spin" />
+                                Saving...
+                            </span>
+                        ) : "Save & Next"}
                     </Button>
                 )}
             />

@@ -1,8 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Link } from "@tanstack/react-router"
-import { CheckCircle2, FileIcon, Mail, Phone, MapPin, Briefcase, Users } from "lucide-react"
+import { CheckCircle2, FileIcon, Mail, MapPin, Briefcase, Users } from "lucide-react"
 
 export function ViewSubmission({ form }: { form: any }) {
     const Section = ({ title, icon: Icon, children }: any) => (

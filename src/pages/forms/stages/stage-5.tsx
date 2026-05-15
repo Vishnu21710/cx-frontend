@@ -3,7 +3,7 @@ import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import api from "@/lib/axios"
 import { useNavigate } from "@tanstack/react-router"
-import { CheckCircle } from "lucide-react"
+import { CheckCircle, Loader } from "lucide-react"
 import { FormInput } from "@/components/common/FormInput"
 import { FormSelect } from "@/components/common/FormSelect"
 
@@ -116,8 +116,13 @@ export function Stage5Form({ formId, initialData, onSuccess }: any) {
             <form.Subscribe
                 selector={(state) => [state.canSubmit, state.isSubmitting]}
                 children={([canSubmit, isSubmitting]) => (
-                    <Button type="submit" className="w-full h-12 text-lg" disabled={!canSubmit}>
-                        {isSubmitting ? "Submitting..." : (
+                    <Button type="submit" className="w-full h-12 text-lg" disabled={!canSubmit || isSubmitting}>
+                        {isSubmitting ? (
+                            <span className="flex items-center gap-2 font-semibold">
+                                <Loader className="h-5 w-5 animate-spin" />
+                                Submitting...
+                            </span>
+                        ) : (
                             <span className="flex items-center gap-2 font-semibold">
                                 Complete & Submit Application <CheckCircle className="h-5 w-5" />
                             </span>

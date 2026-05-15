@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import api from "@/lib/axios"
 import { useDropzone } from "react-dropzone"
 import { useState } from "react"
-import { Upload, X, FileIcon, Eye } from "lucide-react"
+import { Upload, X, FileIcon, Eye, Loader } from "lucide-react"
 import { ImageModal } from "@/components/common/ImageModal"
 
 export function Stage4Form({ formId, initialData, onSuccess }: any) {
@@ -15,6 +15,7 @@ export function Stage4Form({ formId, initialData, onSuccess }: any) {
     })
 
     const [viewingImage, setViewingImage] = useState<{ url: string, title: string } | null>(null)
+    const [isSubmitting, setIsSubmitting] = useState(false)
 
     const hasExistingPhoto = !!initialData?.photoIdPath
     const hasExistingResume = !!initialData?.resumePath
@@ -30,6 +31,9 @@ export function Stage4Form({ formId, initialData, onSuccess }: any) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        if (isSubmitting) return
+
+        setIsSubmitting(true)
         const formData = new FormData()
         
         if (files.photoId) formData.append("photoId", files.photoId)
@@ -47,6 +51,8 @@ export function Stage4Form({ formId, initialData, onSuccess }: any) {
             onSuccess()
         } catch (error) {
             console.error("Stage 4 failed", error)
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -101,7 +107,7 @@ export function Stage4Form({ formId, initialData, onSuccess }: any) {
                                     View
                                 </Button>
                             )}
-                            <Button variant="ghost" size="sm" onClick={() => removeFile(name)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
+                            <Button type="button" variant="ghost" size="sm" onClick={() => removeFile(name)} className="text-destructive hover:text-destructive hover:bg-destructive/10">
                                 <X className="h-4 w-4" />
                             </Button>
                         </div>
@@ -181,9 +187,14 @@ export function Stage4Form({ formId, initialData, onSuccess }: any) {
                 <Button 
                     type="submit" 
                     className="w-full" 
-                    disabled={(!files.photoId && !hasExistingPhoto) || (!files.resume && !hasExistingResume)}
+                    disabled={isSubmitting || (!files.photoId && !hasExistingPhoto) || (!files.resume && !hasExistingResume)}
                 >
-                    Save & Next
+                    {isSubmitting ? (
+                        <span className="flex items-center gap-2">
+                            <Loader className="h-4 w-4 animate-spin" />
+                            Saving...
+                        </span>
+                    ) : "Save & Next"}
                 </Button>
             </form>
 

@@ -1,4 +1,4 @@
-import { X, ZoomIn } from "lucide-react"
+import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 interface ImageModalProps {

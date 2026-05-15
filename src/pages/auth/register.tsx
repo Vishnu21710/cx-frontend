@@ -6,6 +6,7 @@ import { Link, useNavigate } from "@tanstack/react-router"
 import api from "@/lib/axios"
 import { useAuthStore } from "@/store/auth-store"
 import { FormInput } from "@/components/common/FormInput"
+import { Loader } from "lucide-react"
 
 export function RegisterPage() {
     const navigate = useNavigate()
@@ -105,8 +106,13 @@ export function RegisterPage() {
                         <form.Subscribe
                             selector={(state) => [state.canSubmit, state.isSubmitting]}
                             children={([canSubmit, isSubmitting]) => (
-                                <Button type="submit" className="w-full h-11 text-base font-semibold" disabled={!canSubmit}>
-                                    {isSubmitting ? "Creating account..." : "Register"}
+                                <Button type="submit" className="w-full h-11 text-base font-semibold" disabled={!canSubmit || isSubmitting}>
+                                    {isSubmitting ? (
+                                        <span className="flex items-center gap-2">
+                                            <Loader className="h-4 w-4 animate-spin" />
+                                            Creating account...
+                                        </span>
+                                    ) : "Register"}
                                 </Button>
                             )}
                         />
