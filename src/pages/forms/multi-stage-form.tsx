@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import { useParams } from "@tanstack/react-router"
+import { Link, useParams } from "@tanstack/react-router"
 import { Progress } from "@/components/ui/progress"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -64,9 +64,14 @@ export function MultiStageForm() {
 
     return (
         <div className="container max-w-4xl mx-auto p-6 space-y-8">
-            <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tight">Application Form</h1>
-                <p className="text-muted-foreground">Please complete all stages to submit your application.</p>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                <div className="space-y-2">
+                    <h1 className="text-3xl font-bold tracking-tight">Application Form</h1>
+                    <p className="text-muted-foreground">Please complete all stages to submit your application.</p>
+                </div>
+                <Button variant="outline" asChild>
+                    <Link to="/">Back to Dashboard</Link>
+                </Button>
             </div>
 
             <div className="space-y-4">

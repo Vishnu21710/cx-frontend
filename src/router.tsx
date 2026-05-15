@@ -7,6 +7,7 @@ import { MultiStageForm } from './pages/forms/multi-stage-form'
 import { useEffect } from 'react'
 import api from './lib/axios'
 import { Loader } from 'lucide-react'
+import { Button } from './components/ui/button'
 
 let createFormRequest: Promise<string> | null = null
 
@@ -40,9 +41,14 @@ function NewFormPage() {
   }, [navigate])
 
   return (
-    <div className="flex min-h-screen items-center justify-center gap-2 text-muted-foreground">
-      <Loader className="h-5 w-5 animate-spin" />
-      <span>Creating form...</span>
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4 text-muted-foreground">
+      <div className="flex items-center gap-2">
+        <Loader className="h-5 w-5 animate-spin" />
+        <span>Creating form...</span>
+      </div>
+      <Button variant="outline" onClick={() => navigate({ to: "/" })}>
+        Back to Dashboard
+      </Button>
     </div>
   )
 }
